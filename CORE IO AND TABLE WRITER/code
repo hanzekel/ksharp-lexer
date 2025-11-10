@@ -1,0 +1,108 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+// B. CORE I/O + SYMBOL TABLE PRINTER
+// Purpose: handle file reading and Symbol Table output.
+
+
+// Reads the entire contents of a file into a heap-allocated buffer.
+// Returns pointer to buffer (caller must free), or NULL on failure.
+// Also stores the length in *out_len.
+char* read_all(const char* path, size_t* out_len) {
+    FILE* fp = fopen(path, "r");
+    if (!fp) {
+        perror("read_all: fopen");
+        if (out_len) *out_len = 0;
+        return NULL;
+    }
+
+    fseek(fp, 0, SEEK_END);
+    long size = ftell(fp);
+    rewind(fp);
+
+    if (size < 0) {
+        fclose(fp);
+        fprintf(stderr, "read_all: ftell failed\n");
+        if (out_len) *out_len = 0;
+        return NULL;
+    }
+
+    char* buffer = (char*)malloc(size + 1);
+    if (!buffer) {
+        fclose(fp);
+        fprintf(stderr, "read_all: malloc failed\n");
+        if (out_len) *out_len = 0;
+        return NULL;
+    }
+
+    size_t read_bytes = fread(buffer, 1, size, fp);
+    buffer[read_bytes] = '\0';
+    fclose(fp);
+
+    if (out_len) *out_len = read_bytes;
+    return buffer;
+}
+
+// Writes the Symbol Table header to an output file
+void write_table_header(FILE* fp, const char* source) {
+    fprintf(fp, "===========================================\n");
+    fprintf(fp, " Symbol Table for: %s\n", source);
+    fprintf(fp, "===========================================\n");
+    fprintf(fp, "%-20s | %-15s\n", "Lexeme", "Token");
+    fprintf(fp, "-------------------------------------------\n");
+}
+
+// Writes one Symbol Table row
+void write_table_row(FILE* fp, const char* lex, const char* tok) {
+    fprintf(fp, "%-20s | %-15s\n", lex, tok);
+}
+
+// Writes the table footer
+void write_table_footer(FILE* fp) {
+    fprintf(fp, "===========================================\n");
+    fprintf(fp, " End of Symbol Table\n");
+    fprintf(fp, "===========================================\n");
+}
+
+// ==========================================================
+// MAIN (Demo only)
+// ==========================================================
+
+int main(void) {
+    const char* src_file = "example.ksh";
+
+    // Try to read source file (optional)
+    size_t len = 0;
+    char* content = read_all(src_file, &len);
+    if (content) {
+        printf("[Read %zu bytes from %s]\n\n", len, src_file);
+        free(content);
+    } else {
+        printf("[Could not read %s, continuing with sample data...]\n\n", src_file);
+    }
+
+    // Open output file for the Symbol Table
+    FILE* out = fopen("symbol_table.txt", "w");
+    if (!out) {
+        perror("fopen");
+        return 1;
+    }
+
+    // Write header, rows, footer
+    write_table_header(out, src_file);
+    write_table_row(out, "var", "IDENTIFIER");
+    write_table_row(out, "=", "ASSIGN_OP");
+    write_table_row(out, "10", "NUMBER");
+    write_table_row(out, ";", "SEMICOLON");
+    write_table_footer(out);
+
+    fclose(out);
+
+    printf("Symbol table written successfully to 'symbol_table.txt'\n");
+    printf("Open that file in VS Code to view the output table.\n");
+
+    return 0;
+}
+
