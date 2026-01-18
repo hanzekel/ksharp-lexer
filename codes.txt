@@ -1,0 +1,190 @@
+✅ EASY — NO SYNTAX ERROR (5)
+
+int a;
+a = 3;
+print a;
+
+int x;
+x = 10;
+print x;
+
+int count;
+count = 1;
+
+int num;
+num = 5;
+
+int value;
+input value;
+print value;
+
+❌ EASY — WITH SYNTAX ERROR (5)
+E6 ❌ (missing semicolon)
+int a
+a = 3;
+
+E7 ❌ (missing identifier)
+int ;
+
+E8 ❌ (missing assignment operator)
+int x;
+x 5;
+
+E9 ❌ (missing semicolon after print)
+int a;
+print a
+
+E10 ❌ (invalid statement start)
+= 5;
+
+✅ MEDIUM — NO SYNTAX ERROR (5)
+M1
+int a;
+a = 5;
+
+if (a == 5) {
+    print a;
+}
+
+M2
+int x;
+x = 1;
+
+while (x < 5) {
+    x = x + 1;
+}
+
+M3
+int num;
+num = 10;
+
+if (num > 0) {
+    print num;
+} else {
+    num = 0;
+}
+
+M4
+int i;
+i = 0;
+
+while (i < 3) {
+    print i;
+    i = i + 1;
+}
+
+M5
+int a;
+a = 2;
+
+if (a != 3) {
+    a = a + 1;
+}
+
+❌ MEDIUM — WITH SYNTAX ERROR (5)
+M6 ❌ (missing closing brace)
+int a;
+a = 5;
+
+if (a == 5) {
+    print a;
+
+M7 ❌ (missing parentheses)
+if a == 5 {
+    print a;
+}
+
+M8 ❌ (invalid expression)
+int x;
+x = + 5;
+
+M9 ❌ (else without if)
+else {
+    print a;
+}
+
+M10 ❌ (missing semicolon inside block)
+int a;
+a = 1;
+
+if (a == 1) {
+    print a
+}
+
+✅ HARD — NO SYNTAX ERROR (5)
+H1
+int i;
+
+for (i = 0; i < 5; i = i + 1) {
+    print i;
+}
+
+H2
+int x;
+x = 0;
+
+while (x < 3) {
+    if (x == 1) {
+        print x;
+    }
+    x = x + 1;
+}
+
+H3
+int a;
+int b;
+
+a = 2;
+b = 3;
+
+if (a < b) {
+    a = a + b;
+}
+
+H4
+int i;
+
+for (i = 1; i <= 3; i = i + 1) {
+    if (i != 2) {
+        print i;
+    }
+}
+
+H5
+int x;
+x = 5;
+
+if ((x + 1) > 5) {
+    print x;
+}
+
+❌ HARD — WITH SYNTAX ERROR (5)
+H6 ❌ (missing semicolon in for-init)
+int i;
+
+for (i = 0 i < 5; i = i + 1) {
+    print i;
+}
+
+H7 ❌ (invalid for-update syntax)
+for (i = 0; i < 5; i + 1) {
+    print i;
+}
+
+H8 ❌ (missing closing parenthesis)
+if ((a + 1) > 5 {
+    print a;
+}
+
+H9 ❌ (invalid assignment inside loop)
+int i;
+for (i = 0; i < 5; i = ) {
+    print i;
+}
+
+H10 ❌ (missing closing brace)
+int x;
+x = 1;
+
+while (x < 3) {
+    x = x + 1;
